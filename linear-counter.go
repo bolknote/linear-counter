@@ -13,7 +13,7 @@ import (
 
 const intsize = 32
 
-func estimateСardinality(len float64, setBits float64) float64 {
+func estimateCardinality(len float64, setBits float64) float64 {
     return math.Log(len / (len - setBits)) * len
 }
 
@@ -60,7 +60,7 @@ func readFile(bitsize int64) uint64 {
             bit := lineToBitNum(line, bitsize)
 
             byte       := bit / intsize
-            bitinbyte  := uint(bit % intsize)
+            bitinbyte  := uint32(bit % intsize)
 
             vec[byte] |= 1 << bitinbyte
         } else {
@@ -70,7 +70,7 @@ func readFile(bitsize int64) uint64 {
 
     setBitsTotal := calcSetBitsInArray(vec)
 
-    return uint64(estimateСardinality(float64(bitsize), float64(setBitsTotal)))
+    return uint64(estimateCardinality(float64(bitsize), float64(setBitsTotal)))
 }
 
 func main() {
