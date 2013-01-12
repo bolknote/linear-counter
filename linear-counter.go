@@ -11,8 +11,6 @@ import (
     "fmt"
 )
 
-const intsize = 32
-
 func estimateCardinality(len float64, setBits float64) float64 {
     return math.Log(len / (len - setBits)) * len
 }
@@ -52,15 +50,15 @@ func calcSetBitsInArray(vec []uint32) uint64 {
 
 func readFile(bitsize int64) uint64 {
     stdin   := bufio.NewReader(os.Stdin)
-    bufsize := int(math.Ceil(float64(bitsize) / float64(intsize)))
+    bufsize := int(math.Ceil(float64(bitsize) / 32))
     vec     := make([]uint32, bufsize)
 
     for {
         if line, err := stdin.ReadString('\n'); err == nil {
             bit := lineToBitNum(line, bitsize)
 
-            byte       := bit / intsize
-            bitinbyte  := uint32(bit % intsize)
+            byte       := bit / 32
+            bitinbyte  := uint32(bit % 32)
 
             vec[byte] |= 1 << bitinbyte
         } else {
