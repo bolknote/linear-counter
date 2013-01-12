@@ -55,7 +55,7 @@ func readFile(bitsize int64) uint64 {
 
     for {
         if line, err := stdin.ReadString('\n'); err == nil {
-            bit := lineToBitNum(line[:-1], bitsize) // w/o \n
+            bit := lineToBitNum(line, bitsize) // w/o \n
 
             byte       := bit / 32
             bitinbyte  := uint32(bit % 32)
