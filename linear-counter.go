@@ -4,7 +4,6 @@ import (
     "math"
     "math/big"
     "os"
-    "io"
     "bufio"
     "crypto/md5"
     "flag"
@@ -17,7 +16,7 @@ func estimateCardinality(len float64, setBits float64) float64 {
 
 func lineToBitNum(line string, size int64) int64 {
     h := md5.New()
-    io.WriteString(h, line)
+    h.Write([]byte(line))
 
     hash := new(big.Int).SetBytes(h.Sum(nil))
     bit  := new(big.Int)
