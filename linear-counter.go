@@ -14,9 +14,9 @@ func estimateCardinality(len float64, setBits float64) float64 {
     return math.Log(len / (len - setBits)) * len
 }
 
-func lineToBitNum(line string, size int64) int64 {
+func lineToBitNum(line []byte, size int64) int64 {
     h := md5.New()
-    h.Write([]byte(line))
+    h.Write(line)
 
     hash := new(big.Int).SetBytes(h.Sum(nil))
     bit  := new(big.Int)
@@ -53,7 +53,13 @@ func readStdin(bitsize int64) uint64 {
     vec     := make([]uint32, bufsize)
 
     for {
-        if line, err := stdin.ReadString('\n'); err == nil {
+        line, err := stdin.ReadBytes('\n')
+
+        if length := len(line); length > 0 {
+            if err == nil {
+                line = line[0:length-1] // remove tail \n
+            }
+
             bit := lineToBitNum(line, bitsize) // w/o \n
 
             byte       := bit / 32
