@@ -48,7 +48,7 @@ func calcSetBitsInArray(vec []uint32) uint64 {
     return sum
 }
 
-func readFile(bitsize int64) uint64 {
+func readStdin(bitsize int64) uint64 {
     stdin   := bufio.NewReader(os.Stdin)
     bufsize := int(math.Ceil(float64(bitsize) / 32))
     vec     := make([]uint32, bufsize)
@@ -76,5 +76,5 @@ func main() {
     flag.Parse()
 
     fmt.Println("Vector size:", *size, "bits")
-    fmt.Println("Estimated result:", readFile(*size))
+    fmt.Println("Estimated result:", readStdin(*size))
 }
